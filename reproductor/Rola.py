@@ -37,6 +37,11 @@ class Rola:
     def get_album(self):
         return self.__album
 
+    def set_album_path(self, album_path):
+        self.__album_path = album_path
+
+    def get_album_path(self):
+        return self.__album_path
     def set_artist(self, artist):
         self.__artist= artist
 

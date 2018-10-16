@@ -2,6 +2,8 @@
     de getters y setters el estado del objeto que
     queremos"""
 from Rola import Rola
+from Database import Database
+from pprint import pprint
 
 class RolaBuilder:
 
@@ -31,6 +33,10 @@ class RolaBuilder:
     def with_discnumber(self, discnumber):
         self.__song.set_discnumber(discnumber)
         return self
+    def with_album_path(self, album_path):
+        self.__song.set_album_path(album_path)
+        return self
+    
     def buildRola(self):
         if self.__song.valid_state():
             return self.__song
@@ -38,4 +44,16 @@ class RolaBuilder:
             print("no tiene los parámetros requeridos")
     def to_string_song(self):
         s = self.__song.get_title()+self.__song.get_genre()+self.__song.get_discnumber()+self.__song.get_year()+self.__song.get_track()+self.__song.get_artist()+self.__song.get_path()
-        return s
+
+        pprint(s)
+        #pprint(self.__song.get_album())
+        #return s
+    def save_database(self):
+        ruta= ''.join(self.__song.get_path())
+        titulo = ''.join(self.__song.get_title())
+        track = ''.join(self.__song.get_track())
+        year = ''.join(self.__song.get_year())
+        album_name = ''.join(self.__song.get_album())
+        album_path = ''.join(self.__song.get_album_path())
+        song_to_save = Database()
+        song_to_save.insert_in_rola([(ruta),(titulo),(track),(int(year))],[(album_path),(album_name),(int(year))])
