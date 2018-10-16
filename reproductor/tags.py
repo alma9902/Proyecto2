@@ -3,6 +3,7 @@ from mutagen.id3 import ID3NoHeaderError
 from mutagen.id3 import ID3
 from mutagen.easyid3 import EasyID3
 from RolaBuilder import RolaBuilder
+from minero import minero
 
 
 class tags:
@@ -22,12 +23,8 @@ class tags:
         self.song.with_year(self.audio['date'])
         self.song.with_album(self.audio['album'])
         self.song.with_album_path([self.album_path])
-        #print(self.song.to_string_song())
         self.song.to_string_song()
 
-    def send_database(self):
-        self.song.save_database()
-
-#voy a construir el Minero
-#voy a obtener la imagen del album
-#voy a empezar con la interfaz gráfica
+    def send_minar(self):
+        llenar= minero(self.song)
+        llenar.seed_database()

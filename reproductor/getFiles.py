@@ -21,7 +21,7 @@ class getFiles:
         for song in self.paths_list:
             info_song = tags(song, self.album_path_list[i])
             info_song.read_tags()
-            info_song.send_database()
+            info_song.send_minar()
             i += 1
 p = getFiles()
 p.get_info()

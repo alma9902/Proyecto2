@@ -11,25 +11,29 @@ class Database:
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
         try:
-                db.execute("insert into rolas (path, title, track, year) values (?,?,?,?)",data)
+                db.execute("insert into rolas ( path, title, track, year) values (?,?,?,?)",data)
                 db.execute("insert into albums(path, name, year) values (?,?,?)",dataAlbum)
                 conn.commit()
         except sqlite3.IntegrityError:
             print('el registro ya existe')
         finally:
             conn.close()
-    def query_result(self,query):
+
+    def insert_in_performers(self,data):
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
+        db.execute("insert into performers (name) VALUES (?)",data)
+
+    def check_performers(self, name):
+        conn = sqlite3.connect('./../../../../../root/rolas.db')
+        db = conn.cursor()
+        db.execute("select id from performers where name = (?)",name)
+        result = self.db.fetchall()
+        return result
+
+    def query_result(self,query):
         pprint(query)
         #db.execute("insert into rolas (path, title) values (?)",query)
         #ok = db.fetchall()
         db.close()
         return ok
-
-
-#datos = DataBase()
-#datos = datos.connection()
-#datos.insert_in("INSERT INTO rolas (id_performer, id_album, path, title, track, year, genre)VALUES (081349812, 91234093128, '~/Music/A/rolling in the deep', 'rolling in the deep',8329, 2012, 'pop')")
-#print(datos.query_result("SELECT * FROM rolas"))
-#datos.insert_in("INSERT INTO rolas (id_performer, id_album, path, title, track, year, genre)VALUES (081349812, 91234093128, '~/Music/A/rolling in the deep', 'rolling in the deep',8329, 2012, 'pop')")
