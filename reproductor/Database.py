@@ -23,12 +23,15 @@ class Database:
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
         db.execute("insert into performers (name) VALUES (?)",data)
+        conn.commit()
+        conn.close()
 
     def check_performers(self, name):
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
-        db.execute("select id from performers where name = (?)",name)
-        result = self.db.fetchall()
+        db.execute("select id_performer from performers where name = (?)",name)
+        result = db.fetchall()
+        pprint(result)
         return result
 
     def query_result(self,query):

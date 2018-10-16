@@ -11,7 +11,7 @@ class RolaBuilder:
         self.__song = Rola()
     def get_rola(self):
         return self.__song
-    
+
     def with_title(self, title):
        self.__song.set_title(title)
        return self
@@ -47,4 +47,4 @@ class RolaBuilder:
             print("no tiene los parámetros requeridos")
     def to_string_song(self):
         s = self.__song.get_title()+self.__song.get_genre()+self.__song.get_discnumber()+self.__song.get_year()+self.__song.get_track()+self.__song.get_artist()+self.__song.get_path()
-        pprint(s)
+        #pprint(s)
