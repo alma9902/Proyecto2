@@ -36,12 +36,9 @@ class Prueba(QWidget):
 
         busqueda = QLineEdit()
         busqueda.setPlaceholderText("Búsqueda")
-        #busqueda.move(20, 5)
-
-
+    
         dataLayout = QHBoxLayout()
-        #dataLayout.addWidget(mina)
-        #dataLayout.addWidget(busqueda)
+
         dataLayout.addWidget(self.dataView)
         self.dataGroupBox.setLayout(dataLayout)
 
@@ -58,7 +55,6 @@ class Prueba(QWidget):
     def createPlayerModel(self,parent):
         model = QStandardItemModel(0,6,parent)
         model.setHeaderData(self.TITLE, Qt.Horizontal, "title")
-        #model.setHeaderData(self.TITLE, Qt.Horizontal, "Title")
         model.setHeaderData(self.PERFORMER, Qt.Horizontal, "Performer")
         model.setHeaderData(self.ALBUM, Qt.Horizontal, "Album")
         model.setHeaderData(self.TRACK, Qt.Horizontal, "Track")

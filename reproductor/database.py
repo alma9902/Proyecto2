@@ -11,7 +11,8 @@ class database:
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
         try:
-                db.execute("insert into rolas ( id_performer, id_album, path, title, track, year, genre) values (?,?,?,?,?,?,?)",data)
+                db.execute("""insert into rolas ( id_performer, id_album, path,
+                title, track, year, genre) values (?,?,?,?,?,?,?)""",data)
                 conn.commit()
         except sqlite3.IntegrityError:
             print('el registro ya existe')
@@ -65,7 +66,7 @@ class database:
         rows = db.execute("""select title, performers.name, albums.name, track,
                 rolas.year, genre from rolas INNER JOIN performers INNER JOIN
                 albums where rolas.id_performer = performers.id_performer and
-                rolas.id_album= albums.id_album  order by id_rola desc""")
+                rolas.id_album= albums.id_album order by id_rola desc""")
         return rows.fetchall()
 
     def show_rolas_with_performer(self, name):

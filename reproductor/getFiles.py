@@ -17,6 +17,7 @@ class getFiles:
         self.album_path_list = sorted(self.album_path_list)
         self.paths_list = sorted(self.paths_list)
     def get_info(self):
+        self.i=0
         for song in self.paths_list:
             info_song = tags(song, self.album_path_list[self.i])
             info_song.read_tags()
