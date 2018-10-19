@@ -1,5 +1,5 @@
 from os import walk
-from tags import tags
+from .tags import tags
 import os
 class getFiles:
 
@@ -17,11 +17,7 @@ class getFiles:
         self.album_path_list = sorted(self.album_path_list)
         self.paths_list = sorted(self.paths_list)
     def get_info(self):
-        i=0
         for song in self.paths_list:
-            info_song = tags(song, self.album_path_list[i])
+            info_song = tags(song, self.album_path_list[self.i])
             info_song.read_tags()
             info_song.send_minar()
-            i += 1
-p = getFiles()
-p.get_info()

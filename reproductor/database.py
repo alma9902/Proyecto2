@@ -2,7 +2,7 @@
     y de hacer las querys correspondientes"""
 import sqlite3
 from pprint import pprint
-class Database:
+class database:
 
     def __init__(self):
         pass
@@ -51,7 +51,9 @@ class Database:
     def check_rolas(self,data):
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
-        rows = db.execute("select * from rolas where id_performer = (?) and id_album = (?) and path = (?) and title=(?) and track=(?) and year=(?) and genre=(?)",data)
+        rows = db.execute("""select * from rolas where id_performer = (?)
+        and id_album = (?) and path = (?) and title=(?) and track=(?)
+        and year=(?) and genre=(?)""",data)
         return rows.fetchone()
 
 
@@ -60,35 +62,53 @@ class Database:
     def show_rolas(self) :
         conn = sqlite3.connect('./../../../../../root/rolas.db')
         db = conn.cursor()
-        rows = db.execute("select title, performers.name, albums.name, track, rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums")
-        return rows.fetchall() is not None
+        rows = db.execute("""select title, performers.name, albums.name, track,
+                rolas.year, genre from rolas INNER JOIN performers INNER JOIN
+                albums where rolas.id_performer = performers.id_performer and
+                rolas.id_album= albums.id_album  order by id_rola desc""")
+        return rows.fetchall()
 
     def show_rolas_with_performer(self, name):
          conn = sqlite3.connect('./../../../../../root/rolas.db')
          db = conn.cursor()
-         rows = db.execute("select title, performers.name, albums.name, track, rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums where performers.name = (?)",name)
-         return rows.fetchall() is not None
+         rows = db.execute("""select title, performers.name, albums.name, track,
+          rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
+          where performers.name = (?) order by id_rola""",name)
+         return rows.fetchall()
 
     def show_rolas_with_title(self, title):
          conn = sqlite3.connect('./../../../../../root/rolas.db')
          db = conn.cursor()
-         rows = db.execute("select title, performers.name, albums.name, track, rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums where rolas.title = (?)",title)
-         return rows.fetchall() is not None
+         rows = db.execute("""select title, performers.name, albums.name, track,
+          rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
+          where rolas.title = (?) and rolas.id_performer = performers.id_performer and
+          rolas.id_album= albums.id_album  order by id_rola desc""",title)
+
+         return rows.fetchall()
 
     def show_rolas_with_year(self, year):
          conn = sqlite3.connect('./../../../../../root/rolas.db')
          db = conn.cursor()
-         rows = db.execute("select title, performers.name, albums.name, track, rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums where rolas.year = (?)",year)
-         return rows.fetchall() is not None
+         rows = db.execute("""select title, performers.name, albums.name, track,
+          rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
+          where rolas.year = (?) and rolas.id_performer = performers.id_performer and
+          rolas.id_album= albums.id_album  order by id_rola desc """,year)
+         return rows.fetchall()
 
     def show_rolas_with_genre(self, genre):
          conn = sqlite3.connect('./../../../../../root/rolas.db')
          db = conn.cursor()
-         rows = db.execute("select title, performers.name, albums.name, track, rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums where rolas.genre = (?)",genre)
-         return rows.fetchall() is not None
+         rows = db.execute("""select title, performers.name, albums.name, track,
+          rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
+          where rolas.genre = (?) and where rolas.id_performer = performers.id_performer and
+          rolas.id_album= albums.id_album  order by id_rola desc """,genre)
+         return rows.fetchall()
 
     def show_rolas_with_album(self, name):
           conn = sqlite3.connect('./../../../../../root/rolas.db')
           db = conn.cursor()
-          rows = db.execute("select title, performers.name, albums.name, track, rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums where albums.name = (?)",name)
-          return rows.fetchall() is not None
+          rows = db.execute("""select title, performers.name, albums.name, track,
+           rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
+            where albums.name = (?) and rolas.id_performer = performers.id_performer and
+            rolas.id_album= albums.id_album  order by id_rola desc""",name)
+          return rows.fetchall()

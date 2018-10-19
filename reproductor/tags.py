@@ -2,8 +2,8 @@ from mutagen.mp3 import MP3
 from mutagen.id3 import ID3NoHeaderError
 from mutagen.id3 import ID3
 from mutagen.easyid3 import EasyID3
-from RolaBuilder import RolaBuilder
-from minero import minero
+from .RolaBuilder import RolaBuilder
+from .minero import minero
 
 
 class tags:
@@ -11,6 +11,7 @@ class tags:
         self.audio = MP3(path_song, ID3=EasyID3)
         self.path_song = path_song
         self.album_path = album_path
+        self.i = 0
 
     def read_tags(self):
         self.song = RolaBuilder()
@@ -28,3 +29,4 @@ class tags:
     def send_minar(self):
         llenar= minero(self.song)
         llenar.seed_database()
+    

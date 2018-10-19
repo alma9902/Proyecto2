@@ -1,8 +1,8 @@
 """ Es el builder de la clase Rola, asigna a través
     de getters y setters el estado del objeto que
     queremos"""
-from Rola import Rola
-from Database import Database
+from .Rola import Rola
+from .database import database
 from pprint import pprint
 
 class RolaBuilder:
