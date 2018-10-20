@@ -1,7 +1,6 @@
 """Se encarga de la conexión con la base de datos
     y de hacer las querys correspondientes"""
 import sqlite3
-from pprint import pprint
 class database:
 
     def __init__(self):
@@ -66,7 +65,7 @@ class database:
         rows = db.execute("""select title, performers.name, albums.name, track,
                 rolas.year, genre from rolas INNER JOIN performers INNER JOIN
                 albums where rolas.id_performer = performers.id_performer and
-                rolas.id_album= albums.id_album order by id_rola desc""")
+                rolas.id_album= albums.id_album order by id_rola  desc""")
         return rows.fetchall()
 
     def show_rolas_with_performer(self, name):
@@ -74,7 +73,8 @@ class database:
          db = conn.cursor()
          rows = db.execute("""select title, performers.name, albums.name, track,
           rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
-          where performers.name = (?) order by id_rola""",name)
+          where performers.name = (?) and rolas.id_performer = performers.id_performer and
+          rolas.id_album= albums.id_album order by id_rola desc""",name)
          return rows.fetchall()
 
     def show_rolas_with_title(self, title):
@@ -101,7 +101,7 @@ class database:
          db = conn.cursor()
          rows = db.execute("""select title, performers.name, albums.name, track,
           rolas.year, genre from rolas INNER JOIN performers INNER JOIN albums
-          where rolas.genre = (?) and where rolas.id_performer = performers.id_performer and
+          where rolas.genre = (?) and rolas.id_performer = performers.id_performer and
           rolas.id_album= albums.id_album  order by id_rola desc """,genre)
          return rows.fetchall()
 

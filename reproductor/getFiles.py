@@ -13,7 +13,9 @@ class getFiles:
                     album_path = ''.join(path)+"/"
                     self.album_path_list.append(album_path)
                     paths_s = ''.join(path)+"/"+f
-                    self.paths_list.append(paths_s)
+                    longi = len(paths_s)
+                    if(paths_s[longi-3:longi] == "mp3"):
+                        self.paths_list.append(paths_s)
         self.album_path_list = sorted(self.album_path_list)
         self.paths_list = sorted(self.paths_list)
     def get_info(self):

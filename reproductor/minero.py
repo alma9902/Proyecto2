@@ -1,7 +1,7 @@
 from .RolaBuilder import RolaBuilder
 from .Rola import Rola
 from .database import database
-from pprint import pprint
+
 
 
 class minero:
@@ -17,7 +17,7 @@ class minero:
         album_name = ''.join(self.__song.get_album())
         album_path = ''.join(self.__song.get_album_path())
         performer_name = ''.join(self.__song.get_artist())
-        #pprint(performer_name)
+
         song_to_save = database()
         self.id_performer = song_to_save.check_performers([performer_name])
         self.id_album = song_to_save.check_albums([album_name])
@@ -25,9 +25,7 @@ class minero:
         if( self.id_performer is not None ):
             if( self.id_album is not None):
                 self.rola=song_to_save.check_rolas([(self.id_performer[0]),(self.id_album[0]),(path),(title),(track),(int(year)),(genre)])
-        pprint(self.id_performer)
-        pprint(self.id_album)
-        
+
         if (self.id_performer is None):
             song_to_save.insert_in_performers([(performer_name),(2)])
             self.id_performer = song_to_save.check_performers([performer_name])
@@ -39,4 +37,3 @@ class minero:
         if(self.rola != "" and self.rola is None):
             song_to_save.insert_in_rola([(self.id_performer[0]),(self.id_album[0]),(path),(title),(track),(int(year)),(genre)])
             self.rola=self.rola = song_to_save.check_rolas([(self.id_performer[0]),(self.id_album[0]),(path),(title),(track),(int(year)),(genre)])
-        #song_to_save.show_rolas()

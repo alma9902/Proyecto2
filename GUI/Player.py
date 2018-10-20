@@ -1,6 +1,7 @@
 import sys
 from ..reproductor.database import database
 from ..reproductor.getFiles import getFiles
+from ..reproductor.consultas import consultas
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QStandardItemModel
 from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QGridLayout,
@@ -9,9 +10,9 @@ from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QGridLayout,
 
 from PyQt5.QtCore import (QDate, QDateTime, QRegExp, QSortFilterProxyModel, Qt,
         QTime)
-from pprint import pprint
 
-class Prueba(QWidget):
+
+class Player(QWidget):
     TITLE, PERFORMER, ALBUM, TRACK, YEAR, GENRE = range(6)
     def __init__(self):
         super().__init__()
@@ -34,9 +35,12 @@ class Prueba(QWidget):
         mina = QPushButton("Minar")
         mina.clicked.connect(self.on_click)
 
-        busqueda = QLineEdit()
-        busqueda.setPlaceholderText("Búsqueda")
-    
+        self.busqueda = QLineEdit(self)
+        self.busqueda.setPlaceholderText("Búsqueda")
+
+        buscar = QPushButton("Buscar")
+        buscar.clicked.connect(self.search)
+
         dataLayout = QHBoxLayout()
 
         dataLayout.addWidget(self.dataView)
@@ -48,7 +52,8 @@ class Prueba(QWidget):
         mainLayout = QVBoxLayout()
         mainLayout.addWidget(self.dataGroupBox)
         mainLayout.addWidget(mina)
-        mainLayout.addWidget(busqueda)
+        mainLayout.addWidget(self.busqueda)
+        mainLayout.addWidget(buscar)
         self.setLayout(mainLayout)
         self.show()
 
@@ -71,6 +76,21 @@ class Prueba(QWidget):
         model.setData(model.index(0, self.YEAR),year)
         model.setData(model.index(0, self.GENRE),genre)
 
+    def search(self):
+        print('oki'+self.busqueda.text())
+        model = self.createPlayerModel(self)
+        self.dataView.setModel(model)
+        lista_canciones = consultas()
+        rows = lista_canciones.get_rolas(self.busqueda.text())
+        for song in rows:
+            title = song[0]
+            performer= song[1]
+            album = song[2]
+            track = song[3]
+            year = song[4]
+            genre = song[5]
+            self.addSong(model,title, performer, album,track, year, genre)
+
     def on_click(self):
         model = self.createPlayerModel(self)
         self.dataView.setModel(model)
@@ -78,7 +98,6 @@ class Prueba(QWidget):
         minando.get_info()
         lista_canciones = database()
         rows = lista_canciones.show_rolas()
-        pprint(rows)
         num_rolas = len(rows)
         self.i =1
         for song in rows:
@@ -91,7 +110,6 @@ class Prueba(QWidget):
             self.addSong(model,title, performer, album,track, year, genre)
             self.i += 1
 
-
 app= QApplication(sys.argv)
-ex = Prueba()
+ex = Player()
 sys.exit(app.exec_())
